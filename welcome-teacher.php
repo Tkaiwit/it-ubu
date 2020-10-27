@@ -1,0 +1,54 @@
+<?php include('layout/header-backend.php')?>
+			<div id="detailone">
+				<div id="toppic-detail"><label>Welcome To Website</label><br><label>ยินดีต้อนรับเข้าสู่เว็บไซต์</label>
+				</div>
+				<div id="login-ip">
+					<div id="box-login-ip" style="margin-top: 50px; padding: 10px;"> 
+						<div><b>การเข้าสู่ระบบของคุณ</b></div>
+						<?php 
+						include('connectDB/connectDB.php');
+						$id=$_SESSION['teacher_id'];
+						$mysqlo = "SELECT * FROM teacher where teacher_id ='$id' ";
+						$mq = mysqli_query($conDB,$mysqlo);
+						$row = mysqli_fetch_array($mq);
+						 ?>
+						<div>
+							<label for=""> IP : <?php echo $row['teacher_login_ip']; ?></label>
+						</div>
+						<div>
+							<label for=""> 
+								DATE : <?php $strDate=$row['teacher_login_date'];
+								echo obj1($strDate); ?>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+<?php 
+function obj1($strDate){
+$strYear = date("Y",strtotime($strDate))+543;
+$strMonth= date("n",strtotime($strDate));
+$strDay= date("j",strtotime($strDate));
+$strHour= date("H",strtotime($strDate));
+$strMinute= date("i",strtotime($strDate));
+$strSeconds= date("s",strtotime($strDate));
+$strMonthCut = Array("","มกราคม"," กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม"," สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม");
+$strMonthThai=$strMonthCut[$strMonth];
+return " $strDay $strMonthThai $strYear "." TIME : "." $strHour:$strMinute "." น.";
+}
+?>
+<script>
+$( "#book" ).slideUp( "slow", function() {
+    $('#box-login-ip').delay(1000);
+});
+
+function explode(){
+  $('#box-login-ip').fadeOut().delay(3000);
+}
+setTimeout(explode, 2000);
+</script>
+</body>
+</html>
